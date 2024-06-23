@@ -16,7 +16,7 @@ function getAge(): number {
   const currentTime = Date.now();
 
   const tomorrow = new Date(currentTime + 24 * 60 * 60 * 1000);
-  tomorrow.setHours(3, 0, 0, 0);
+  tomorrow.setHours(4, 0, 0, 0);
   const tomorrowTime = tomorrow.getTime();
 
   return tomorrowTime - currentTime;
