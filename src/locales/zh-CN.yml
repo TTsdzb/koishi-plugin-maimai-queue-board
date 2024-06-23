@@ -2,37 +2,40 @@ commands:
   maiqueue:
     description: "赛博排卡板，可以通过 Bot 指令进行排卡喵~"
     messages:
-      pleaseUseInGuilds: "请在群聊中使用。"
+      pleaseUseInGuilds: "你一个人排哪家的队？在群聊中使用！"
       currentQueue: "当前队伍如下："
-      queueNotExist: "该群没有“{0}”这个队伍！你是不是走错地方了？"
+      queueNotExist: "该群没有“{0}”这个队伍！老大，你是不是走错地方了？"
 
     attend:
-      description: "在指定的机厅排卡。"
+      description: "在指定的机厅排卡喵~"
       usage: |-
         指定一个机厅队伍，把自己加到队尾。
-        需要事先和群友商量好各个机厅的名称。不要打错字哦！Bot 不会帮你检查。
-        机厅不会跨群，不同群的相同名字会视为两个不同的机厅。
+        需要事先和群友商量好各个机厅的名称。不要打错字哦！本大人才不会帮你检查呢！
+        机厅不会跨群，不同群的相同名字咱会当做两个不同的机厅喵~
       messages:
-        pleaseProvideArcade: "请指定要排的机厅。"
+        pleaseProvideArcade: "在哪排队？说清楚喵~"
         alreadyInQueue: "你已经在一个队伍里啦！"
         success: "排卡成功，{0}现在共 {1} 人！"
 
     leave:
-      description: "退出当前排卡队伍。"
+      description: "不打了，跑路，退出当前排卡队伍！"
       usage: |-
         退勤，把自己从正在排的队伍中移除。
-        虽然机厅不会跨群，但不管你在哪里发送该指令都是一样的！
       messages:
-        notInQueue: "你还没排卡呢！"
+        notInQueue: "你还没排卡呢！退个🥚！"
         success: "退勤成功，{0}现在共 {1} 人！"
 
     list:
       description: "查看当前或指定的队伍。"
+      usage: |-
+        显示特定的队伍列表。如果没有指定，则显示自己当前所在的队伍。
       messages:
         notInQueue: "你还没排卡呢！请指定要查询的机厅喵！"
 
     on:
       description: "上机。"
+      usage: |-
+        上机并将自己的卡移到队尾。
       messages:
         notInQueue: "你还没排卡呢！怎么上机喵！"
         notYourTurn: "还没轮到你上机呢！着什么急喵！"
