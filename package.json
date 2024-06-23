@@ -1,7 +1,15 @@
 {
   "name": "koishi-plugin-maimai-queue-board",
-  "description": "适用于舞萌DX的群排卡板",
+  "description": "Koishi的舞萌DX的群排卡板插件",
   "version": "0.0.1",
+  "contributors": [
+    "TTsdzb <ttsdzb@outlook.com>"
+  ],
+  "homepage": "https://github.com/TTsdzb/koishi-plugin-maimai-queue-board",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TTsdzb/koishi-plugin-maimai-queue-board.git"
+  },
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -9,14 +17,27 @@
     "dist"
   ],
   "license": "MIT",
-  "scripts": {},
   "keywords": [
     "chatbot",
     "koishi",
     "plugin"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "@koishijs/cache": "^2.1.0"
+  },
   "peerDependencies": {
     "koishi": "^4.17.8"
+  },
+  "koishi": {
+    "description": {
+      "zh": "适用于舞萌DX的群排卡板"
+    },
+    "service": {
+      "required": [
+        "cache"
+      ],
+      "optional": [],
+      "implements": []
+    }
   }
 }
