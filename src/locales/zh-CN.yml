@@ -49,3 +49,12 @@ commands:
       messages:
         pleaseProvideArcade: "让哪一队强制上机？说清楚喵~"
         success: "强制上机成功！"
+
+    force-leave:
+      description: "强制退勤。"
+      usage: |-
+        移除指定队伍的第一张卡。
+        适用于某人退勤但联系不到的情况。需要至少 2 级权限。
+      messages:
+        pleaseProvideArcade: "让哪一队强制退勤？说清楚喵~"
+        success: "强制退勤成功，{0}现在共 {1} 人！"
