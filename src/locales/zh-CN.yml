@@ -40,3 +40,12 @@ commands:
         notInQueue: "你还没排卡呢！怎么上机喵！"
         notYourTurn: "还没轮到你上机呢！着什么急喵！"
         success: "上机成功！"
+
+    force-on:
+      description: "强制上机。"
+      usage: |-
+        将指定队伍的第一张卡移到队尾。
+        适用于轮到某人上机但找不到人的情况。需要至少 2 级权限。
+      messages:
+        pleaseProvideArcade: "让哪一队强制上机？说清楚喵~"
+        success: "强制上机成功！"

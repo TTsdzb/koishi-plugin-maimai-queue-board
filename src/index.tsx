@@ -42,8 +42,10 @@ declare module "@koishijs/cache" {
 export function apply(ctx: Context) {
   ctx.i18n.define("zh-CN", require("./locales/zh-CN"));
 
-  ctx
-    .command("maiqueue.attend <arcade:string>")
+  const baseCommand = ctx.command("maiqueue");
+
+  baseCommand
+    .subcommand("attend <arcade:string>")
     .action(async ({ session }, arcade) => {
       if (!session.guildId)
         return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
@@ -96,7 +98,7 @@ export function apply(ctx: Context) {
       );
     });
 
-  ctx.command("maiqueue.leave").action(async ({ session }) => {
+  baseCommand.subcommand("leave").action(async ({ session }) => {
     if (!session.guildId)
       return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
 
@@ -149,8 +151,8 @@ export function apply(ctx: Context) {
     );
   });
 
-  ctx
-    .command("maiqueue.list [arcade:string]")
+  baseCommand
+    .subcommand("list [arcade:string]")
     .action(async ({ session }, arcade) => {
       if (!session.guildId)
         return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
@@ -177,7 +179,7 @@ export function apply(ctx: Context) {
       );
     });
 
-  ctx.command("maiqueue.on").action(async ({ session }) => {
+  baseCommand.subcommand("on").action(async ({ session }) => {
     if (!session.guildId)
       return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
 
@@ -220,4 +222,44 @@ export function apply(ctx: Context) {
       </>
     );
   });
+
+  baseCommand
+    .subcommand("force-on <arcade:string>", { authority: 2 })
+    .action(async ({ session }, arcade) => {
+      if (!session.guildId)
+        return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
+      if (!arcade) return <i18n path=".pleaseProvideArcade" />;
+
+      // Check if guild is right
+      const queue = await ctx.cache.get(`maimai_queue_${session.gid}`, arcade);
+      if (!queue)
+        return (
+          <i18n path="commands.maiqueue.messages.queueNotExist">{arcade}</i18n>
+        );
+
+      // Edit and save queue
+      queue.push(queue.shift());
+      await ctx.cache.set(
+        `maimai_queue_${session.gid}`,
+        arcade,
+        queue,
+        getAge()
+      );
+      return (
+        <>
+          <p>
+            <i18n path=".success">
+              <>{arcade}</>
+              <>{queue.length}</>
+            </i18n>
+          </p>
+          <p>
+            <i18n path="commands.maiqueue.messages.currentQueue" />
+          </p>
+          {queue.map((card) => (
+            <p>{card.name}</p>
+          ))}
+        </>
+      );
+    });
 }
