@@ -27,15 +27,10 @@ interface Card {
   name: string;
 }
 
-interface RevCard {
-  table: `maimai_queue_${string}`;
-  arcade: string;
-}
-
 declare module "@koishijs/cache" {
   interface Tables {
     [key: `maimai_queue_${string}`]: Card[];
-    maimai_rev_queue: RevCard;
+    maimai_rev_queue: string;
   }
 }
 
@@ -70,15 +65,7 @@ export function apply(ctx: Context) {
         queue,
         getAge()
       );
-      await ctx.cache.set(
-        "maimai_rev_queue",
-        session.uid,
-        {
-          table: `maimai_queue_${session.gid}`,
-          arcade,
-        },
-        getAge()
-      );
+      await ctx.cache.set("maimai_rev_queue", session.uid, arcade, getAge());
 
       return (
         <>
@@ -103,27 +90,27 @@ export function apply(ctx: Context) {
       return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
 
     // Check if user already in a queue
-    const revCard = await ctx.cache.get("maimai_rev_queue", session.uid);
-    if (!revCard) return <i18n path=".notInQueue" />;
+    const arcade = await ctx.cache.get("maimai_rev_queue", session.uid);
+    if (!arcade) return <i18n path=".notInQueue" />;
 
     // Check if guild is right
-    let queue = await ctx.cache.get(
-      `maimai_queue_${session.gid}`,
-      revCard.arcade
-    );
+    let queue = await ctx.cache.get(`maimai_queue_${session.gid}`, arcade);
     if (!queue)
       return (
-        <i18n path="commands.maiqueue.messages.queueNotExist">
-          {revCard.arcade}
-        </i18n>
+        <i18n path="commands.maiqueue.messages.queueNotExist">{arcade}</i18n>
       );
 
     // Remove the user and save queue
     queue = queue.filter((card) => card.uid != session.uid);
     if (queue.length === 0) {
-      await ctx.cache.delete(revCard.table, revCard.arcade);
+      await ctx.cache.delete(`maimai_queue_${session.gid}`, arcade);
     } else {
-      await ctx.cache.set(revCard.table, revCard.arcade, queue, getAge());
+      await ctx.cache.set(
+        `maimai_queue_${session.gid}`,
+        arcade,
+        queue,
+        getAge()
+      );
     }
     await ctx.cache.delete("maimai_rev_queue", session.uid);
 
@@ -131,7 +118,7 @@ export function apply(ctx: Context) {
       <>
         <p>
           <i18n path=".success">
-            <>{revCard.arcade}</>
+            <>{arcade}</>
             <>{queue.length}</>
           </i18n>
         </p>
@@ -158,7 +145,7 @@ export function apply(ctx: Context) {
         return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
 
       if (!arcade)
-        arcade = (await ctx.cache.get("maimai_rev_queue", session.uid))?.arcade;
+        arcade = await ctx.cache.get("maimai_rev_queue", session.uid);
       if (!arcade) return <i18n path=".notInQueue" />;
 
       const queue = await ctx.cache.get(`maimai_queue_${session.gid}`, arcade);
@@ -184,19 +171,14 @@ export function apply(ctx: Context) {
       return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
 
     // Check if user already in a queue
-    const revCard = await ctx.cache.get("maimai_rev_queue", session.uid);
-    if (!revCard) return <i18n path=".notInQueue" />;
+    const arcade = await ctx.cache.get("maimai_rev_queue", session.uid);
+    if (!arcade) return <i18n path=".notInQueue" />;
 
     // Check if guild is right
-    const queue = await ctx.cache.get(
-      `maimai_queue_${session.gid}`,
-      revCard.arcade
-    );
+    const queue = await ctx.cache.get(`maimai_queue_${session.gid}`, arcade);
     if (!queue)
       return (
-        <i18n path="commands.maiqueue.messages.queueNotExist">
-          {revCard.arcade}
-        </i18n>
+        <i18n path="commands.maiqueue.messages.queueNotExist">{arcade}</i18n>
       );
 
     // Check if the user is first
@@ -204,12 +186,12 @@ export function apply(ctx: Context) {
 
     // Edit and save queue
     queue.push(queue.shift());
-    await ctx.cache.set(revCard.table, revCard.arcade, queue, getAge());
+    await ctx.cache.set(`maimai_queue_${session.gid}`, arcade, queue, getAge());
     return (
       <>
         <p>
           <i18n path=".success">
-            <>{revCard.arcade}</>
+            <>{arcade}</>
             <>{queue.length}</>
           </i18n>
         </p>
