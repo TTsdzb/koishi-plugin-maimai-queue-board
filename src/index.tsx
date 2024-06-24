@@ -90,10 +90,7 @@ export function apply(ctx: Context) {
             <i18n path="commands.maiqueue.messages.currentQueue" />
           </p>
           {queue.map((card) => (
-            <p>
-              {card.name}
-              <br />
-            </p>
+            <p>{card.name}</p>
           ))}
         </>
       );
@@ -218,10 +215,7 @@ export function apply(ctx: Context) {
           <i18n path="commands.maiqueue.messages.currentQueue" />
         </p>
         {queue.map((card) => (
-          <p>
-            {card.name}
-            <br />
-          </p>
+          <p>{card.name}</p>
         ))}
       </>
     );
