@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-maimai-queue-board",
   "description": "Koishi的舞萌DX的群排卡板插件",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "contributors": [
     "TTsdzb <ttsdzb@outlook.com>"
   ],
