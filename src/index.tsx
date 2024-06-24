@@ -40,7 +40,7 @@ export function apply(ctx: Context) {
   const baseCommand = ctx.command("maiqueue");
 
   baseCommand
-    .subcommand("attend <arcade:string>")
+    .subcommand(".attend <arcade:string>")
     .action(async ({ session }, arcade) => {
       if (!session.guildId)
         return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
@@ -85,7 +85,7 @@ export function apply(ctx: Context) {
       );
     });
 
-  baseCommand.subcommand("leave").action(async ({ session }) => {
+  baseCommand.subcommand(".leave").action(async ({ session }) => {
     if (!session.guildId)
       return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
 
@@ -139,7 +139,7 @@ export function apply(ctx: Context) {
   });
 
   baseCommand
-    .subcommand("list [arcade:string]")
+    .subcommand(".list [arcade:string]")
     .action(async ({ session }, arcade) => {
       if (!session.guildId)
         return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
@@ -166,7 +166,7 @@ export function apply(ctx: Context) {
       );
     });
 
-  baseCommand.subcommand("on").action(async ({ session }) => {
+  baseCommand.subcommand(".on").action(async ({ session }) => {
     if (!session.guildId)
       return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
 
@@ -206,7 +206,7 @@ export function apply(ctx: Context) {
   });
 
   baseCommand
-    .subcommand("force-on <arcade:string>", { authority: 2 })
+    .subcommand(".force-on <arcade:string>", { authority: 2 })
     .action(async ({ session }, arcade) => {
       if (!session.guildId)
         return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
@@ -246,7 +246,7 @@ export function apply(ctx: Context) {
     });
 
   baseCommand
-    .subcommand("force-leave <arcade:string>", { authority: 2 })
+    .subcommand(".force-leave <arcade:string>", { authority: 2 })
     .action(async ({ session }, arcade) => {
       if (!session.guildId)
         return <i18n path="commands.maiqueue.messages.pleaseUseInGuilds" />;
